@@ -1,0 +1,5 @@
+node_modules/
+reports/
+# Markdown docs are hand-formatted (wide tables read better unpadded)
+*.md
+log/

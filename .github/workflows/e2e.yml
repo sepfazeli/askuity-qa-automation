@@ -1,0 +1,94 @@
+name: E2E tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-checks:
+    name: Typecheck, lint, format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+
+  e2e:
+    name: ${{ matrix.name }}
+    needs: static-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Desktop regression (gate)
+            command: npm run test:stable
+            artifact: desktop-stable
+          - name: Mobile responsive (gate)
+            command: npm run test:mobile
+            artifact: mobile
+          # Tests for the open bugs in BUGS.md. They fail until the bugs are fixed, so this job doesn't block.
+          - name: Known bugs (non-blocking)
+            command: npm run test:bugs
+            artifact: known-bugs
+            non-blocking: true
+    continue-on-error: ${{ matrix.non-blocking == true }}
+    env:
+      CI: true
+      HEADLESS: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: ${{ matrix.command }}
+      - name: Build Allure report
+        if: always()
+        run: npx allure generate ./reports/allure-results/* -o ./reports/allure-report || true
+      - name: Upload reports, screenshots and logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports-${{ matrix.artifact }}
+          path: reports/
+          retention-days: 14
+
+  browserstack:
+    name: Real devices on BrowserStack (manual)
+    # Device minutes are limited, so this job only runs when started by hand from the Actions tab.
+    if: github.event_name == 'workflow_dispatch'
+    needs: static-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run test:browserstack
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports-browserstack
+          path: reports/
+          retention-days: 14
