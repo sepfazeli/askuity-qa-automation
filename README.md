@@ -91,6 +91,12 @@ Runs #1 to #3 each failed on one phone. On Android the on-screen keyboard swallo
 iPhone and Android drivers read drop-down values differently. Both were fixed in the test code, and run #4
 passed on both phones.
 
+Recordings from BrowserStack:
+
+- [Real iPhone 17 (Safari), all mobile tests passing](docs/videos/iphone-17-passed.mp4)
+- [Real Galaxy S25 (Chrome), all mobile tests passing](docs/videos/galaxy-s25-passed.mp4)
+- [Galaxy S25 before the fix: the Login tap is lost](docs/videos/galaxy-s25-failed-before-fix.mp4)
+
 How I'd approach mobile testing at a larger scale:
 
 - Emulation on every push, because it's fast and free.
