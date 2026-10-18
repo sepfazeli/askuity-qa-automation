@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { env } from '../src/support/env';
+import { log } from '../src/support/logger';
 
 export type Suite = 'desktop' | 'mobile' | 'browserstack';
 
@@ -16,7 +17,8 @@ const slug = (text: string): string =>
     .slice(0, 120);
 
 // The first page load can be slow while the hosted app wakes up.
-export async function sharedBefore(): Promise<void> {
+export async function sharedBefore(_capabilities: unknown, specs: string[]): Promise<void> {
+  log.info(`Spec: ${specs.map((spec) => path.basename(spec)).join(', ')}`);
   await browser.setTimeout({ pageLoad: 60_000 });
 }
 
@@ -24,6 +26,9 @@ export async function sharedBefore(): Promise<void> {
 export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabilities'> {
   const allureResultsDir = path.join(REPORTS_DIR, 'allure-results', suite);
   const screenshotsDir = path.join(REPORTS_DIR, 'screenshots', suite);
+  const logsDir = path.join(REPORTS_DIR, 'logs', suite);
+  // Read by src/support/logger.ts in every worker process.
+  process.env.LOG_DIR = logsDir;
 
   return {
     runner: 'local',
@@ -33,8 +38,7 @@ export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabiliti
     maxInstances: env.maxInstances,
 
     logLevel: 'warn',
-    logLevels: { askuity: env.logLevel },
-    outputDir: path.join(REPORTS_DIR, 'logs', suite),
+    outputDir: logsDir,
 
     bail: 0,
     waitforTimeout: 10_000,
@@ -65,6 +69,11 @@ export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabiliti
 
     onPrepare() {
       for (const dir of [allureResultsDir, screenshotsDir]) fs.rmSync(dir, { recursive: true, force: true });
+      if (fs.existsSync(logsDir)) {
+        for (const file of fs.readdirSync(logsDir).filter((f) => f.startsWith('worker-'))) {
+          fs.rmSync(path.join(logsDir, file));
+        }
+      }
       console.log(
         `\n▶ ${suite} suite | ${env.baseUrl} | browser=${env.browser} headless=${env.headless} ` +
           `workers=${env.maxInstances}\n`,
@@ -74,8 +83,9 @@ export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabiliti
     before: sharedBefore,
 
     // Save a screenshot for every failed test.
-    async afterTest(test, _context, { passed }) {
+    async afterTest(test, _context, { passed, error }) {
       if (passed) return;
+      log.error(`FAILED: ${test.parent} > ${test.title}\n${(error as Error | undefined)?.message ?? ''}`);
       try {
         const browserName = String(browser.capabilities.browserName ?? 'browser');
         const width = await browser.execute(() => window.innerWidth);

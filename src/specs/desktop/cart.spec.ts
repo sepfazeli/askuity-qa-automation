@@ -2,9 +2,15 @@ import { expect } from '@wdio/globals';
 import { ITEM_INTERACTION_LIMIT, MESSAGES } from '../../data/constants';
 import { PRODUCTS, productByName } from '../../data/products';
 import { USERS } from '../../data/users';
-import { addToCart, loginAs, openCartWith, productsFromBothEnds } from '../../flows/shopping.flow';
+import {
+  addToCart,
+  expectedOrderLines,
+  loginAs,
+  openCartWith,
+  productsFromBothEnds,
+} from '../../flows/shopping.flow';
 import { CartPage, InventoryPage } from '../../pages';
-import { lineTotal } from '../../support/money';
+import { calculateOrderTotals, lineTotal } from '../../support/money';
 
 const HOODIE = productByName('After Hours Hoodie');
 const DAY_PACK = productByName('Trailmark Day Pack');
@@ -38,7 +44,7 @@ describe('Cart', () => {
     expect(await InventoryPage.getProductCount()).toBe(PRODUCTS.length);
   });
 
-  it('@smoke TC-CART-02 adds several products from the top and bottom of the list', async () => {
+  it('@smoke TC-CART-02 adds products from the top and bottom of the list and shows the right total', async () => {
     const picks = await productsFromBothEnds(2);
 
     await openCartWith(...picks);
@@ -54,6 +60,8 @@ describe('Cart', () => {
         lineTotal: p.price,
       })),
     );
+    // Subtotal of the catalogue prices plus 8% tax, calculated independently of the page.
+    expect(await CartPage.getTotals()).toEqual(calculateOrderTotals(expectedOrderLines(...picks)));
   });
 
   it('TC-CART-03 (+) and (−) update the quantity, line total, item count and badge', async () => {

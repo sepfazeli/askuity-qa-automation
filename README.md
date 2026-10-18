@@ -60,6 +60,14 @@ Other decisions:
 - Prices are calculated in cents to avoid floating-point errors, and tax is rounded to the nearest cent.
 - Shipping details are random for each run (generated with Faker) and written to the log.
 - Every failed test saves a screenshot to `reports/screenshots` and adds it to the Allure report.
+- Logging: each step (logging in, adding an item, changing a quantity) and every failure with its error
+  is written to a log file, one per parallel browser: `reports/logs/<suite>/worker-<id>.log`. WebdriverIO's
+  own shared log got garbled when tests ran in parallel, so the framework writes separate files.
+  `npm run report` opens an Allure report with the steps, screenshots and errors for every test.
+- Error handling: failures say what went wrong instead of just "timed out". Waits report the last value
+  they saw (for example "Timed out waiting for the cart badge count to be 3 (last value: 2)"), page objects throw clear errors
+  such as "Could not parse a currency amount from …", and tests that check many items collect every
+  failure before reporting, so one run lists every broken product.
 
 ## Tests that find bugs
 
@@ -149,7 +157,7 @@ checkout (7) and mobile (8).
 | ID | Test | Expected | Status |
 | --- | --- | --- | --- |
 | TC-CART-01 | Open the cart before adding anything, click Continue Shopping | "Your cart is empty", then back to the products | ✅ |
-| TC-CART-02 | Add 2 items from the top and 2 from the bottom of the list | Badge shows 4, cart lists the 4 items with the right prices | ✅ |
+| TC-CART-02 | Add 2 items from the top and 2 from the bottom of the list | Badge shows 4, cart lists the 4 items with the right prices, and the total = subtotal + 8% tax | ✅ |
 | TC-CART-03 | Press + twice and − once on one item | Quantity, line total, item count and badge update each time | ✅ |
 | TC-CART-04 | Press − at quantity 1, then press remove | The item leaves the cart, and the empty message shows at the end | ✅ |
 | TC-CART-05 | Set quantity 3 on a product, then Add to Cart | 3 units added in one click | ✅ |
