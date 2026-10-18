@@ -93,9 +93,13 @@ passed on both phones.
 
 Recordings from BrowserStack:
 
-- [Real iPhone 17 (Safari), all mobile tests passing](docs/videos/iphone-17-passed.mp4)
-- [Real Galaxy S25 (Chrome), all mobile tests passing](docs/videos/galaxy-s25-passed.mp4)
-- [Galaxy S25 before the fix: the Login tap is lost](docs/videos/galaxy-s25-failed-before-fix.mp4)
+| Device | Browser | Result | Video |
+| --- | --- | --- | --- |
+| iPhone 17 (iOS 26) | Safari | All 5 mobile tests pass | [Watch](https://drive.google.com/file/d/1dpMAZjSpV4xpLL7_o_woYYh9Bp2PvX__/view?usp=sharing) |
+| Samsung Galaxy S25 (Android 15) | Chrome | All 5 mobile tests pass | [Watch](https://drive.google.com/file/d/1dF8fBZYxhITVpAJ5Pdf_nq2AKuZjq8mE/view?usp=sharing) |
+| Samsung Galaxy S25 (Android 15) | Chrome | Before the fix: the Login tap is lost, so the tests fail | [Watch](https://drive.google.com/file/d/139MdTcvCXAcr48p4oMlIC3AVZLuDmNZT/view?usp=sharing) |
+
+The same videos are also in [`docs/videos`](docs/videos).
 
 How I'd approach mobile testing at a larger scale:
 
