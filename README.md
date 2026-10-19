@@ -3,7 +3,7 @@
 Automated tests for the Morrow Supply shopping cart (https://qa-task--oyettijon.replit.app), written in
 TypeScript with WebdriverIO 9, Mocha and the Page Object Model.
 
-There are 57 desktop tests and 5 mobile tests, which run on 3 screen sizes. I found 9 bugs, written up in
+There are 66 desktop tests and 5 mobile tests, which run on 3 screen sizes. I found 11 bugs, written up in
 [BUGS.md](BUGS.md).
 
 ## Quick start
@@ -120,7 +120,7 @@ How I'd approach mobile testing at a larger scale:
 
 ✅ passes, ❌ fails because of a bug. Each test starts with a fresh login as `fern_signal` unless it says
 otherwise. The sections follow the exercise steps: login (1), products (2), cart (3–5), pricing (6),
-checkout (7) and mobile (8).
+checkout (7) and mobile (8), plus extra checks for accessibility and unusual input.
 
 ### Login
 
@@ -189,6 +189,14 @@ The cart holds After Hours Hoodie × 2 and Trailmark Day Pack × 1.
 | TC-CHK-04 | Go back from the order summary | The form is still filled in | ✅ |
 | TC-CHK-05 | Finish, then Continue Shopping | "Order Placed!" page, then an empty cart | ✅ |
 | TC-CHK-06 | Finish, then check the cart badge | Badge is cleared | ❌ BUG-008 |
+| TC-CHK-07 | Type `<script>` and `<b>` tags into the shipping fields | Shown as plain text on the order summary, never run | ✅ |
+| TC-CHK-08 | Enter a 150-character first name and continue | Order summary fits the screen and the Finish button stays visible | ❌ BUG-011 |
+
+### Accessibility
+
+| ID | Test | Expected | Status |
+| --- | --- | --- | --- |
+| TC-A11Y-01 | Scan each page with axe: login, products, product detail, cart, checkout form, order summary, confirmation (7 tests) | No WCAG 2.1 AA violations | ❌ BUG-010 |
 
 ### Other accounts and the full journey
 
@@ -208,6 +216,20 @@ The cart holds After Hours Hoodie × 2 and Trailmark Day Pack × 1.
 | TC-MOB-04 | Change quantities in the cart | Item count and totals are correct | ✅ |
 | TC-MOB-05 | Full checkout | Reaches "Order Placed!" and every page fits the screen | ✅ |
 
+## What I'd test next
+
+With more time, these are the areas I'd add:
+
+- **Accessibility, by hand:** keyboard-only use and a screen reader. Automated scans like axe catch a good
+  share of problems, but not all of them.
+- **Visual comparison:** compare page screenshots against approved versions with WebdriverIO's visual service
+  or Percy (part of BrowserStack). That would catch problems like the wrong product images (BUG-006) without
+  a custom test.
+- **API level:** the store currently runs entirely in the browser. If it gets a backend, I'd test the cart
+  and price maths through the API with Postman or Bruno, and load with JMeter.
+- **Performance:** page load times on a slow network and a slow phone, using Lighthouse (WebdriverIO has a
+  Lighthouse service).
+
 ## Bugs found
 
 Full write-ups with steps and screenshots are in [BUGS.md](BUGS.md).
@@ -221,6 +243,8 @@ Full write-ups with steps and screenshots are in [BUGS.md](BUGS.md).
 7. BUG-007: After 6 clicks on one item, a "System overload" error blocks that item for the session.
 8. BUG-008: The cart isn't cleared after an order, so the same order can be placed twice.
 9. BUG-009: Refreshing the page logs you out and empties the cart.
+10. BUG-010: Every page fails WCAG 2.1 AA accessibility checks (unlabelled links and buttons, low contrast).
+11. BUG-011: A very long name pushes the order summary and the Finish button off-screen.
 
 ## Notes
 

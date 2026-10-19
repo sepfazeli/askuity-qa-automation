@@ -1,6 +1,6 @@
 # Bugs
 
-Found while testing https://qa-task--oyettijon.replit.app on 17 Oct 2026, using Chrome 155 on macOS
+Found while testing https://qa-task--oyettijon.replit.app on 17–19 Oct 2026, using Chrome 155 on macOS
 (desktop at 1440×900, plus mobile emulation). The password for every account is `test_sauce`.
 
 Each bug has a test tagged `@known-bug` that fails until the bug is fixed (`npm run test:bugs`).
@@ -16,6 +16,8 @@ Each bug has a test tagged `@known-bug` that fails until the bug is fixed (`npm 
 | [BUG-007](#bug-007) | "System overload" after 6 clicks blocks the item | High | P2 |
 | [BUG-008](#bug-008) | Cart isn't cleared after an order, so it can be placed twice | High | P1 |
 | [BUG-009](#bug-009) | Refreshing the page logs you out and empties the cart | Medium | P2 |
+| [BUG-010](#bug-010) | Pages fail WCAG 2.1 AA accessibility checks | Medium | P2 |
+| [BUG-011](#bug-011) | A long name pushes the order summary and Finish button off-screen | Medium | P3 |
 
 ---
 
@@ -201,10 +203,64 @@ second time. The cart only clears if you click **Continue Shopping** on the conf
 
 ---
 
+<a id="bug-010"></a>
+
+## BUG-010: Pages fail WCAG 2.1 AA accessibility checks
+
+**Severity:** Medium | **Priority:** P2 | **Test:** `TC-A11Y-01` (one test per page)
+
+**Steps**
+
+1. Install the free **axe DevTools** browser extension (Chrome or Firefox).
+2. Log in as `fern_signal`.
+3. Open the browser's developer tools, go to the **axe DevTools** tab and scan the products page.
+4. Repeat on the login, cart, checkout and order summary pages.
+
+**Expected:** No WCAG 2.1 AA violations.
+
+**Actual:** Every page has violations:
+
+- **Links with no text:** the 12 product image links on the products page, and the back-arrow link on the
+  checkout form. A screen reader only says "link".
+- **Button with no name (critical):** the back-arrow button on the order summary.
+- **Low text contrast on every page.** The worst is the grey footer text at 2.23:1, where at least 4.5:1 is
+  required. The "Demo only — no real payment is processed." note is 2.6:1.
+- **Visible text missing from the screen-reader name:** the 4 practice-account buttons on the login page,
+  and the Logout button ("Logout" on screen, "Log out" for screen readers).
+
+**Evidence:** `npm run test:bugs` lists every broken rule for each page.
+
+---
+
+<a id="bug-011"></a>
+
+## BUG-011: A long name pushes the order summary and Finish button off-screen
+
+**Severity:** Medium | **Priority:** P3 | **Test:** `TC-CHK-08`
+
+**Steps**
+
+1. Log in, add any product to the cart and go to checkout.
+2. Enter a 150-character first name with no spaces (for example `AAAA…`), any last name and postal code.
+3. Click **Continue**.
+
+**Expected:** The name wraps inside the "Shipping to" box and the page fits the screen.
+
+**Actual:** The name runs out of the "Shipping to" box. On desktop the page becomes wider than the window and
+the Payment Summary, including the **Finish** button, moves off-screen to the right. On phones the name runs
+off the screen edge, and at iPhone SE size the whole page scrolls sideways. The shipping fields also have no
+length limit.
+
+**Screenshots:** [desktop](docs/bug-evidence/BUG-011-long-name-desktop.png),
+[phone](docs/bug-evidence/BUG-011-long-name-phone.png)
+
+---
+
 ## Other observations
 
 These may be intentional, so I haven't filed them as bugs:
 
-- The shipping fields accept anything, for example `12345` as a first name or `@@@@` as a postal code.
+- The shipping fields accept anything, for example `12345` as a first name or `@@@@` as a postal code
+  (see also BUG-011).
 - Every login error starts with "Epic sadface below —", which looks like leftover placeholder text.
 - The "12 items to explore" counter has no `data-test` attribute, unlike the rest of the page.

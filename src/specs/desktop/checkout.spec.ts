@@ -17,6 +17,7 @@ import {
   CheckoutOverviewPage,
   InventoryPage,
 } from '../../pages';
+import { hasHorizontalOverflow, isHorizontallyInViewport } from '../../utils/layout';
 import { calculateOrderTotals, lineTotal } from '../../utils/money';
 
 const ITEMS: CartRequest[] = [
@@ -133,5 +134,27 @@ describe('Checkout', () => {
     await CheckoutOverviewPage.finish();
 
     expect(await CheckoutCompletePage.header.getCartBadgeCount()).toBe(0);
+  });
+
+  it('TC-CHK-07 script tags typed into the shipping fields are shown as plain text, never run', async () => {
+    const shipping = buildShippingInfo({
+      firstName: '<script>window.injected = true</script>',
+      lastName: '<b>Bold</b>',
+    });
+
+    await CheckoutInformationPage.submitShippingInfo(shipping);
+
+    await expect(CheckoutOverviewPage.shippingInfo).toHaveText(
+      `${shipping.firstName} ${shipping.lastName} — ${shipping.postalCode}`,
+    );
+    await expect(CheckoutOverviewPage.shippingInfo.$('b')).not.toBeExisting();
+    expect(await browser.execute(() => typeof (window as { injected?: boolean }).injected)).toBe('undefined');
+  });
+
+  it('@known-bug BUG-011 TC-CHK-08 a very long name keeps the order summary and Finish button on screen', async () => {
+    await CheckoutInformationPage.submitShippingInfo(buildShippingInfo({ firstName: 'A'.repeat(150) }));
+
+    expect(await isHorizontallyInViewport(await CheckoutOverviewPage.finishButton.getElement())).toBe(true);
+    expect(await hasHorizontalOverflow()).toBe(false);
   });
 });
