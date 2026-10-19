@@ -1,6 +1,6 @@
-import { log } from '../support/logger';
-import { parseMoney, type OrderTotals } from '../support/money';
-import { PAGE_ROOT, testId } from '../support/selectors';
+import { log } from '../utils/logger';
+import { parseMoney, type OrderTotals } from '../utils/money';
+import { PAGE_ROOT, testId } from '../utils/selectors';
 import { BasePage } from './base.page';
 import CheckoutCompletePage from './checkout-complete.page';
 import type { CartLine } from './components/cart-item.component';

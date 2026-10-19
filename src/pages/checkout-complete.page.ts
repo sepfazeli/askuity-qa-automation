@@ -1,4 +1,4 @@
-import { PAGE_ROOT, testId } from '../support/selectors';
+import { PAGE_ROOT, testId } from '../utils/selectors';
 import { BasePage } from './base.page';
 import InventoryPage from './inventory.page';
 

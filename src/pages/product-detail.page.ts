@@ -1,6 +1,6 @@
-import { log } from '../support/logger';
-import { parseMoney } from '../support/money';
-import { PAGE_ROOT, testId, testIdPrefix } from '../support/selectors';
+import { log } from '../utils/logger';
+import { parseMoney } from '../utils/money';
+import { PAGE_ROOT, testId, testIdPrefix } from '../utils/selectors';
 import { BasePage } from './base.page';
 
 class ProductDetailPage extends BasePage {

@@ -1,9 +1,9 @@
 import { PURCHASABLE_PRODUCTS, productByName, type Product } from '../data/products';
 import type { User } from '../data/users';
 import { CartPage, InventoryPage, LoginPage } from '../pages';
-import { log } from '../support/logger';
-import type { OrderLine } from '../support/money';
-import { waitUntilEqual } from '../support/wait';
+import { log } from '../utils/logger';
+import type { OrderLine } from '../utils/money';
+import { waitUntilEqual } from '../utils/wait';
 
 export interface CartRequest {
   product: Product;

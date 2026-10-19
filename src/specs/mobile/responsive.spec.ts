@@ -18,9 +18,9 @@ import {
   hasHorizontalOverflow,
   isHorizontallyInViewport,
   viewportWidth,
-} from '../../support/layout';
-import { calculateOrderTotals } from '../../support/money';
-import { testId } from '../../support/selectors';
+} from '../../utils/layout';
+import { calculateOrderTotals } from '../../utils/money';
+import { testId } from '../../utils/selectors';
 
 async function expectFitsScreen(): Promise<void> {
   expect(await hasHorizontalOverflow()).toBe(false);

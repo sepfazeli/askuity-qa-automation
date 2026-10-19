@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { env } from '../src/support/env';
+import { env } from '../src/utils/env';
 import { ROOT, sharedConfig } from './wdio.shared.conf';
 
 if (!env.browserstackUser || !env.browserstackKey) {

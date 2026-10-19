@@ -49,7 +49,7 @@ How the code is organised:
 - `src/flows`: common multi-step actions, like logging in or adding several items to the cart.
 - `src/data`: test data and expected values (product catalogue, users, tax rate, messages). Expected
   values come from here, not from the page, so a wrong price on screen gets caught.
-- `src/support`: helpers for selectors, waits, prices and logging.
+- `src/utils`: helpers for selectors, waits, prices and logging.
 - `src/specs`: the tests.
 - `config`: WebdriverIO settings for desktop and mobile.
 

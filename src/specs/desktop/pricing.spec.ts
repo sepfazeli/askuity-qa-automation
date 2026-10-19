@@ -4,7 +4,7 @@ import { PURCHASABLE_PRODUCTS, productByName } from '../../data/products';
 import { USERS } from '../../data/users';
 import { expectedOrderLines, loginAs, openCartWith, type CartRequest } from '../../flows/shopping.flow';
 import { CartPage } from '../../pages';
-import { calculateOrderTotals, lineTotal } from '../../support/money';
+import { calculateOrderTotals, lineTotal } from '../../utils/money';
 
 const HOODIE = productByName('After Hours Hoodie');
 const DAY_PACK = productByName('Trailmark Day Pack');

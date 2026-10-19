@@ -1,8 +1,8 @@
 import type { Product } from '../../data/products';
-import { log } from '../../support/logger';
-import { parseMoney } from '../../support/money';
-import { itemId, testId, testIdPrefix } from '../../support/selectors';
-import { waitUntilEqual } from '../../support/wait';
+import { log } from '../../utils/logger';
+import { parseMoney } from '../../utils/money';
+import { itemId, testId, testIdPrefix } from '../../utils/selectors';
+import { waitUntilEqual } from '../../utils/wait';
 
 // Found by product id, so it keeps working after the grid re-renders.
 export class ProductCard {

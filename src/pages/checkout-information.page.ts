@@ -1,7 +1,7 @@
 import type { ShippingInfo } from '../data/shipping';
-import { log } from '../support/logger';
-import { parseMoney } from '../support/money';
-import { PAGE_ROOT, testId } from '../support/selectors';
+import { log } from '../utils/logger';
+import { parseMoney } from '../utils/money';
+import { PAGE_ROOT, testId } from '../utils/selectors';
 import { BasePage } from './base.page';
 import CheckoutOverviewPage from './checkout-overview.page';
 

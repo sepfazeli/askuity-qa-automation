@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { env } from '../src/support/env';
+import { env } from '../src/utils/env';
 import { ROOT, sharedBefore, sharedConfig } from './wdio.shared.conf';
 
 const WINDOW = { width: 1440, height: 900 };

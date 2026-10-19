@@ -11,8 +11,8 @@ import {
   CheckoutOverviewPage,
   InventoryPage,
 } from '../../pages';
-import { calculateOrderTotals, lineTotal } from '../../support/money';
-import { step } from '../../support/step';
+import { calculateOrderTotals, lineTotal } from '../../utils/money';
+import { step } from '../../utils/step';
 
 // Exercise steps 1 to 7 in one session.
 describe('End-to-end purchase journey', () => {

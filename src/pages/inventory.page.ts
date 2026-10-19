@@ -1,9 +1,9 @@
 import type { SortOption } from '../data/constants';
 import type { Category, Product } from '../data/products';
-import { log } from '../support/logger';
-import { parseMoney } from '../support/money';
-import { PAGE_ROOT, testId } from '../support/selectors';
-import { waitUntilEqual } from '../support/wait';
+import { log } from '../utils/logger';
+import { parseMoney } from '../utils/money';
+import { PAGE_ROOT, testId } from '../utils/selectors';
+import { waitUntilEqual } from '../utils/wait';
 import { BasePage } from './base.page';
 import { ProductCard } from './components/product-card.component';
 import ProductDetailPage from './product-detail.page';

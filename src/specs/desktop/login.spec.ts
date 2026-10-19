@@ -3,7 +3,7 @@ import { MESSAGES } from '../../data/constants';
 import { INVALID_CREDENTIALS, PRACTICE_USERS, USERS } from '../../data/users';
 import { loginAs } from '../../flows/shopping.flow';
 import { CartPage, InventoryPage, LoginPage } from '../../pages';
-import { PAGE_ROOT } from '../../support/selectors';
+import { PAGE_ROOT } from '../../utils/selectors';
 
 describe('Login', () => {
   beforeEach(async () => {

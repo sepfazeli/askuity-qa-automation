@@ -1,6 +1,6 @@
 import type { User } from '../data/users';
-import { log } from '../support/logger';
-import { PAGE_ROOT, testId, testIdPrefix } from '../support/selectors';
+import { log } from '../utils/logger';
+import { PAGE_ROOT, testId, testIdPrefix } from '../utils/selectors';
 import { BasePage } from './base.page';
 import InventoryPage from './inventory.page';
 

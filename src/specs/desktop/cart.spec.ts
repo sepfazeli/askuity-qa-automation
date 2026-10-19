@@ -10,7 +10,7 @@ import {
   productsFromBothEnds,
 } from '../../flows/shopping.flow';
 import { CartPage, InventoryPage } from '../../pages';
-import { calculateOrderTotals, lineTotal } from '../../support/money';
+import { calculateOrderTotals, lineTotal } from '../../utils/money';
 
 const HOODIE = productByName('After Hours Hoodie');
 const DAY_PACK = productByName('Trailmark Day Pack');

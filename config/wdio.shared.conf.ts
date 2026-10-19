@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { env } from '../src/support/env';
-import { log } from '../src/support/logger';
+import { env } from '../src/utils/env';
+import { log } from '../src/utils/logger';
 
 export type Suite = 'desktop' | 'mobile' | 'browserstack';
 
@@ -27,7 +27,7 @@ export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabiliti
   const allureResultsDir = path.join(REPORTS_DIR, 'allure-results', suite);
   const screenshotsDir = path.join(REPORTS_DIR, 'screenshots', suite);
   const logsDir = path.join(REPORTS_DIR, 'logs', suite);
-  // Read by src/support/logger.ts in every worker process.
+  // Read by src/utils/logger.ts in every worker process.
   process.env.LOG_DIR = logsDir;
 
   return {

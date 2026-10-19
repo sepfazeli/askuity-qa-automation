@@ -1,4 +1,4 @@
-import { env } from '../support/env';
+import { env } from '../utils/env';
 import { MESSAGES } from './constants';
 
 export interface User {

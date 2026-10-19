@@ -1,4 +1,4 @@
-import { testId } from '../support/selectors';
+import { testId } from '../utils/selectors';
 import { HeaderComponent } from './components/header.component';
 
 export abstract class BasePage {

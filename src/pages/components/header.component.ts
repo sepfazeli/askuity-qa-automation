@@ -1,6 +1,6 @@
-import { log } from '../../support/logger';
-import { PAGE_ROOT, testId } from '../../support/selectors';
-import { waitUntilEqual } from '../../support/wait';
+import { log } from '../../utils/logger';
+import { PAGE_ROOT, testId } from '../../utils/selectors';
+import { waitUntilEqual } from '../../utils/wait';
 
 export class HeaderComponent {
   get root() {

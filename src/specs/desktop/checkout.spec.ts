@@ -17,7 +17,7 @@ import {
   CheckoutOverviewPage,
   InventoryPage,
 } from '../../pages';
-import { calculateOrderTotals, lineTotal } from '../../support/money';
+import { calculateOrderTotals, lineTotal } from '../../utils/money';
 
 const ITEMS: CartRequest[] = [
   { product: productByName('After Hours Hoodie'), quantity: 2 },
