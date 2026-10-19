@@ -64,7 +64,7 @@ describe('Cart', () => {
     expect(await CartPage.getTotals()).toEqual(calculateOrderTotals(expectedOrderLines(...picks)));
   });
 
-  it('TC-CART-03 (+) and (−) update the quantity, line total, item count and badge', async () => {
+  it('TC-CART-03 (+) and (-) update the quantity, line total, item count and badge', async () => {
     await openCartWith(HOODIE, DAY_PACK);
     const hoodie = CartPage.item(HOODIE);
 
@@ -88,7 +88,7 @@ describe('Cart', () => {
     expect(await CartPage.header.getCartBadgeCount()).toBe(3);
   });
 
-  it('TC-CART-04 (−) at quantity 1 and the remove button both take the item out of the cart', async () => {
+  it('TC-CART-04 (-) at quantity 1 and the remove button both take the item out of the cart', async () => {
     await openCartWith(HOODIE, DAY_PACK);
 
     await CartPage.item(HOODIE).decrease();

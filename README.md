@@ -66,7 +66,7 @@ Other decisions:
   `npm run report` opens an Allure report with the steps, screenshots and errors for every test.
 - Error handling: failures say what went wrong instead of just "timed out". Waits report the last value
   they saw (for example "Timed out waiting for the cart badge count to be 3 (last value: 2)"), page objects throw clear errors
-  such as "Could not parse a currency amount from …", and tests that check many items collect every
+  such as "Could not parse a currency amount from ...", and tests that check many items collect every
   failure before reporting, so one run lists every broken product.
 
 ## Tests that find bugs
@@ -158,8 +158,8 @@ checkout (7) and mobile (8), plus extra checks for accessibility and unusual inp
 | --- | --- | --- | --- |
 | TC-CART-01 | Open the cart before adding anything, click Continue Shopping | "Your cart is empty", then back to the products | ✅ |
 | TC-CART-02 | Add 2 items from the top and 2 from the bottom of the list | Badge shows 4, cart lists the 4 items with the right prices, and the total = subtotal + 8% tax | ✅ |
-| TC-CART-03 | Press + twice and − once on one item | Quantity, line total, item count and badge update each time | ✅ |
-| TC-CART-04 | Press − at quantity 1, then press remove | The item leaves the cart, and the empty message shows at the end | ✅ |
+| TC-CART-03 | Press + twice and - once on one item | Quantity, line total, item count and badge update each time | ✅ |
+| TC-CART-04 | Press - at quantity 1, then press remove | The item leaves the cart, and the empty message shows at the end | ✅ |
 | TC-CART-05 | Set quantity 3 on a product, then Add to Cart | 3 units added in one click | ✅ |
 | TC-CART-06 | Go from the cart to the products and back | Cart unchanged | ✅ |
 | TC-CART-07 | Add every product from the products page | All 12 are added | ❌ BUG-002 |
@@ -171,18 +171,18 @@ checkout (7) and mobile (8), plus extra checks for accessibility and unusual inp
 
 | ID | Test | Expected | Status |
 | --- | --- | --- | --- |
-| TC-PRICE-01 | Check the totals for 3 carts: one cheap item, mixed quantities, every product | Subtotal = sum of price × quantity, tax = 8% rounded to the cent, total = subtotal + tax | ✅ |
+| TC-PRICE-01 | Check the totals for 3 carts: one cheap item, mixed quantities, every product | Subtotal = sum of price x quantity, tax = 8% rounded to the cent, total = subtotal + tax | ✅ |
 | TC-PRICE-02 | Check the tax label | "Tax (8%)" | ✅ |
 | TC-PRICE-03 | Change quantities and remove an item | Totals are right after every change | ✅ |
 
 ### Checkout
 
-The cart holds After Hours Hoodie × 2 and Trailmark Day Pack × 1.
+The cart holds 2 x After Hours Hoodie and 1 x Trailmark Day Pack.
 
 | ID | Test | Expected | Status |
 | --- | --- | --- | --- |
 | TC-CHK-01 | Open checkout | Form shown, and the preview total matches the cart | ✅ |
-| TC-CHK-02 | Leave out the last name, or the postal code | The matching "… is required" message, and you can't continue | ✅ |
+| TC-CHK-02 | Leave out the last name, or the postal code | The matching "... is required" message, and you can't continue | ✅ |
 | TC-CHK-02 | Leave out the first name | "First Name is required" | ❌ BUG-003 |
 | TC-CHK-02 | Submit an empty form, or only spaces | All three fields are flagged | ✅ |
 | TC-CHK-03 | Fill in the form and continue | Order summary matches the cart, the totals and the shipping details | ✅ |

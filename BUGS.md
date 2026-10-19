@@ -1,7 +1,7 @@
 # Bugs
 
 Found while testing https://qa-task--oyettijon.replit.app on 17–19 Oct 2026, using Chrome 155 on macOS
-(desktop at 1440×900, plus mobile emulation). The password for every account is `test_sauce`.
+(desktop at 1440x900, plus mobile emulation). The password for every account is `test_sauce`.
 
 Each bug has a test tagged `@known-bug` that fails until the bug is fixed (`npm run test:bugs`).
 
@@ -32,9 +32,9 @@ Each bug has a test tagged `@known-bug` that fails until the bug is fixed (`npm 
 1. Log in as `fern_signal`.
 2. In the sort menu, choose **Price: High to Low**.
 
-**Expected:** Most expensive first ($49.99, $44.99 … $4.99).
+**Expected:** Most expensive first ($49.99, $44.99 ... $4.99).
 
-**Actual:** Cheapest first ($4.99, $7.99 … $49.99), the same order as Price: Low to High. It also happens
+**Actual:** Cheapest first ($4.99, $7.99 ... $49.99), the same order as Price: Low to High. It also happens
 inside a category filter.
 
 **Screenshot:** [BUG-001-price-high-to-low.png](docs/bug-evidence/BUG-001-price-high-to-low.png)
@@ -241,7 +241,7 @@ second time. The cart only clears if you click **Continue Shopping** on the conf
 **Steps**
 
 1. Log in, add any product to the cart and go to checkout.
-2. Enter a 150-character first name with no spaces (for example `AAAA…`), any last name and postal code.
+2. Enter a 150-character first name with no spaces (for example `AAAA...`), any last name and postal code.
 3. Click **Continue**.
 
 **Expected:** The name wraps inside the "Shipping to" box and the page fits the screen.

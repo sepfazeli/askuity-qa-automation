@@ -11,7 +11,7 @@ const DAY_PACK = productByName('Trailmark Day Pack');
 const SOCKS = productByName('Bug Hunt Crew Socks');
 const DECALS = productByName('Branch Point Decals');
 
-// $4.99 × 8% = $0.3992, which should round to $0.40.
+// $4.99 x 8% = $0.3992, which should round to $0.40.
 const BASKETS: { name: string; items: CartRequest[] }[] = [
   { name: 'a single low-priced item (tax rounds up)', items: [{ product: DECALS, quantity: 1 }] },
   {

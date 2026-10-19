@@ -75,7 +75,7 @@ export function sharedConfig(suite: Suite): Omit<WebdriverIO.Config, 'capabiliti
         }
       }
       console.log(
-        `\n▶ ${suite} suite | ${env.baseUrl} | browser=${env.browser} headless=${env.headless} ` +
+        `\nRunning ${suite} suite | ${env.baseUrl} | browser=${env.browser} headless=${env.headless} ` +
           `workers=${env.maxInstances}\n`,
       );
     },

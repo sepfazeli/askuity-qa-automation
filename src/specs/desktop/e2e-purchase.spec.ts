@@ -48,7 +48,7 @@ describe('End-to-end purchase journey', () => {
       expect(await CartPage.getTotals()).toEqual(calculateOrderTotals(cartLines()));
     });
 
-    await step('5. Increase and decrease quantities with (+) and (−)', async () => {
+    await step('5. Increase and decrease quantities with (+) and (-)', async () => {
       const [first, , , last] = [...cart.keys()];
 
       await CartPage.item(first).increase();
@@ -63,14 +63,14 @@ describe('End-to-end purchase journey', () => {
       expect(await CartPage.header.getCartBadgeCount()).toBe(cartQuantity());
     });
 
-    await step('6. Validate pricing: Σ(price × qty) + 8% tax = total', async () => {
+    await step('6. Validate pricing: sum of price x quantity + 8% tax = total', async () => {
       for (const line of await CartPage.getLines()) {
         expect(line.lineTotal).toBe(lineTotal(line));
       }
       expect(await CartPage.getTotals()).toEqual(calculateOrderTotals(cartLines()));
     });
 
-    await step('7. Checkout: shipping info → order summary → finish → confirmation', async () => {
+    await step('7. Checkout: shipping info, order summary, finish, confirmation', async () => {
       await CartPage.proceedToCheckout();
       await CheckoutInformationPage.submitShippingInfo(shipping);
 

@@ -23,7 +23,7 @@ export async function loginAs(user: User): Promise<void> {
 // Each add is confirmed by the cart badge going up, which also waits out the "Added!" animation.
 export async function addToCart(...items: CartRequestInput[]): Promise<void> {
   for (const { product, quantity } of items.map(toRequest)) {
-    log.info(`Adding ${quantity} × "${product.name}" to the cart`);
+    log.info(`Adding ${quantity} x "${product.name}" to the cart`);
     const card = InventoryPage.card(product);
     await card.setQuantity(quantity);
     const before = await InventoryPage.header.getCartBadgeCount();
@@ -31,7 +31,7 @@ export async function addToCart(...items: CartRequestInput[]): Promise<void> {
     await waitUntilEqual(
       () => InventoryPage.header.getCartBadgeCount(),
       before + quantity,
-      `the cart badge after adding ${quantity} × "${product.name}"`,
+      `the cart badge after adding ${quantity} x "${product.name}"`,
     );
   }
 }
